@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}主页{% endblock%}
+{% block main %}
+<div id="main">
+    <div id="sidebar">
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">个人信息</span>
+            </div>
+            <div class="inner">
+                <div class="user_card">
+                    <div>
+                        <a class="user_avatar" >
+                            <img src="{{ url_for('index.image',filename=u.image[8:]) }}">
+                        </a>
+                        <span class="user_name"><a class="dark" href="{{ url_for('boyka_topic.profile', id=u.id) }}">{{ u.username }}</a></span>
+                        <div class="space clearfix"></div>
+                        <span class="signature">
+                            {{ u.signature }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="inner">
+                <a href="{{ url_for('boyka_topic.new', board_id=bid ) }}" class="create_topic_btn">
+                    <span class="span-success">发布话题xxxxxxxxxxxxxxxx</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div class="panel">
+            <div class="header">
+                <a href="/topic"
+                   class="topic-tab current-tab">
+                    全部的帖子
+                </a>
+
+                {% for b in bs %}
+                <a href="{{ url_for('boyka_topic.index', board_id=b.id) }}"
+                   class="topic-tab current-tab">
+                    {{ b.title }}
+                </a>
+                {% endfor %}
+            </div>
+            <div class="inner post">
+                <div class="topic_list">
+                    {% for t in ms %}
+                    <div class="cell">
+                        <div class="topic_title_wrapper">
+                            <a class="topic_title" href="{{ url_for('boyka_topic.detail', id=t.id) }}">
+                                {{ t.title }}
+                            </a>
+                            <span>{{ t.replies() | count }} / {{ t.views }}</span>
+                            {# count(t.replies()) #}
+                            {# <span>{{ t.reply_count() }} / {{ t.views }}</span> #}
+                            <a class="topic_title" href="{{ url_for('boyka_topic.delete', id=t.id, token=token) }}">
+                                删除
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

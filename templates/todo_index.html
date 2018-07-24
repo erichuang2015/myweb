@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Todo List AJAX{% endblock%}
+{% block main %}
+<div id="main">
+    <input id='id-input-todo'>
+    <button id='id-button-add'>add</button>
+    <div id="id-todo-list">
+    </div>
+    <!-- boyka.js 放了公共的函数 -->
+    <script src='/static/js/boyka.js'></script>
+    <script src='/static/js/todo.js'></script>
+</div>
+{% endblock %}

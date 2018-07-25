@@ -51,29 +51,8 @@ def generate_fake_date():
         content=content
     )
 
-<<<<<<< HEAD
-    # for i in range(15):
-    #     print('begin topic <{}>'.format(i))
     t = Topic.new(topic_form, u.id)
-        #
-        # reply_form = dict(
-        #     content='reply test',
-        #     topic_id=t.id,
-        # )
-        # for j in range(10):
-        #     Reply.new(reply_form, u.id)
-=======
-    for i in range(10):
-        print('begin topic <{}>'.format(i))
-        t = Topic.new(topic_form, u.id)
 
-        reply_form = dict(
-            content='reply test',
-            topic_id=t.id,
-        )
-        for j in range(10):
-            Reply.new(reply_form, u.id)
->>>>>>> parent of ae996f2... Revert "暂时移除redis"
 
 
 if __name__ == '__main__':

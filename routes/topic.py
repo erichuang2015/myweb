@@ -117,6 +117,7 @@ def new():
 
 @main.route("/profile/<int:id>")
 def profile(id):
+    board_id = int(request.args.get('board_id', -1))
     u = User.one(id=id)
     topics = Topic.all_desc_order(user_id=id)
     replies = Reply.all_desc_order(user_id=id)
@@ -126,6 +127,6 @@ def profile(id):
         if topic in rtopics:
             continue
         rtopics.append(topic)
-    return render_template("topic/profile.html", u=u, topics=topics, rtopics=rtopics)
+    return render_template("topic/profile.html", u=u, topics=topics, rtopics=rtopics, bid=board_id)
 
 

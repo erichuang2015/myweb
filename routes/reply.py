@@ -45,7 +45,7 @@ def send_mails(sender, receivers, content):
 
 @main.route("/add", methods=["POST"])
 def add():
-    form = request.form
+    form = request.form.to_dict()
     u = current_user()
 
     print('DEBUG', form)

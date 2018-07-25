@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
   
   # 虚拟机镜像
   # config.vm.box = "ubuntu/trusty64"
-  config.vm.box = "boykavm"
+  config.vm.box = "guavm"
 
   # 映射文件夹
   config.vm.synced_folder ".", "/var/www/myweb"

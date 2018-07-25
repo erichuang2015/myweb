@@ -51,7 +51,7 @@ def generate_fake_date():
         content=content
     )
 
-    for i in range(10):
+    for i in range(15):
         print('begin topic <{}>'.format(i))
         t = Topic.new(topic_form, u.id)
 

@@ -13,6 +13,11 @@ from routes import current_user, csrf_required, new_csrf_token, login_required, 
 
 from models.topic import Topic
 
+import json
+
+import redis
+
+cache = redis.StrictRedis()
 
 main = Blueprint('boyka_topic', __name__)
 
@@ -72,18 +77,49 @@ def new():
     token = new_csrf_token()
     return render_template("topic/new.html", bs=bs, bid=board_id, token=token, u=u)
 
+def created_topic(user_id):
+    # O(n)
+    # ts = Topic.all(user_id=user_id)
+
+    k = 'created_topic_{}'.format(user_id)
+    if cache.exists(k):
+        v = cache.get(k)
+        ts = json.loads(v)
+        return ts
+    else:
+        ts = Topic.all_desc_order(user_id=user_id)
+        v = json.dumps([t.json() for t in ts])
+        cache.set(k, v)
+        return ts
+
+
+def replied_topic(user_id):
+    # O(m*n)
+
+    k = 'replied_topic_{}'.format(user_id)
+    if cache.exists(k):
+        v = cache.get(k)
+        ts = json.loads(v)
+        return ts
+    else:
+        rs = Reply.all_desc_order(user_id=user_id)
+        ts = []
+        for r in rs:
+            t = Topic.one(id=r.topic_id)
+            if t in ts:
+                continue
+            ts.append(t)
+
+        v = json.dumps([t.json() for t in ts])
+        cache.set(k, v)
+
+        return ts
 
 @main.route("/profile/<int:id>")
 def profile(id):
     u = User.one(id=id)
-    topics = Topic.all_desc_order(user_id=id)
-    replies = Reply.all_desc_order(user_id=id)
-    rtopics = []
-    for reply in replies:
-        topic = Topic.one(id=reply.topic_id)
-        if topic in rtopics:
-            continue
-        rtopics.append(topic)
-    return render_template("topic/profile.html", u=u, topics=topics, rtopics=rtopics)
+    created = created_topic(u.id)
+    replied = replied_topic(u.id)
+    return render_template("topic/profile.html", u=u, topics=created, rtopics=replied)
 
 

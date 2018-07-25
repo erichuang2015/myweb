@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 
 from app import configured_app
 from models.base_model import db
+from models.reply import Reply
 from models.topic import Topic
 from models.user import User
 from models.board import Board
@@ -49,7 +50,17 @@ def generate_fake_date():
         board_id=b.id,
         content=content
     )
-    Topic.new(topic_form, u.id)
+
+    for i in range(15):
+        print('begin topic <{}>'.format(i))
+        t = Topic.new(topic_form, u.id)
+
+        reply_form = dict(
+            content='reply test',
+            topic_id=t.id,
+        )
+        for j in range(10):
+            Reply.new(reply_form, u.id)
 
 
 if __name__ == '__main__':

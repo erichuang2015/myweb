@@ -76,6 +76,13 @@ class SQLMixin(object):
         ms = cls.query.filter_by(**kwargs).order_by(cls.updated_time.desc()).all()
         return ms
 
+    def json(self):
+        d = dict()
+        for attr, column in self.columns():
+            if hasattr(self, attr):
+                v = getattr(self, attr)
+                d[attr] = v
+        return d
 
 
 class SimpleUser(SQLMixin, db.Model):

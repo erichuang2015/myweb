@@ -5,6 +5,7 @@ boyka.log.txt
 secret.py
 *.box
 *.json
+Vagrantfile
 
 
 # Byte-compiled / optimized / DLL files

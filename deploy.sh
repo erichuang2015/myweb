@@ -23,6 +23,7 @@ ufw -f enable
 
 # 装依赖
 add-apt-repository -y ppa:deadsnakes/ppa
+apt-get update
 
 debconf-set-selections /var/www/myweb/database_secret.conf
 apt-get install -y mysql-server

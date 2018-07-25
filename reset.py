@@ -51,16 +51,16 @@ def generate_fake_date():
         content=content
     )
 
-    for i in range(15):
-        print('begin topic <{}>'.format(i))
-        t = Topic.new(topic_form, u.id)
-
-        reply_form = dict(
-            content='reply test',
-            topic_id=t.id,
-        )
-        for j in range(10):
-            Reply.new(reply_form, u.id)
+    # for i in range(15):
+    #     print('begin topic <{}>'.format(i))
+    t = Topic.new(topic_form, u.id)
+        #
+        # reply_form = dict(
+        #     content='reply test',
+        #     topic_id=t.id,
+        # )
+        # for j in range(10):
+        #     Reply.new(reply_form, u.id)
 
 
 if __name__ == '__main__':
